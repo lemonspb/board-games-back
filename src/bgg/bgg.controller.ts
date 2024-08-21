@@ -1,18 +1,14 @@
 import { Controller, Get, Req, Param, Query } from '@nestjs/common';
-import { xml2json } from 'xml-js';
-import translatte = require('translatte');
+// import translatte = require('translatte');
 
-import axios from 'axios';
 import { BggService } from './bgg.service';
-import { Request } from 'express';
 
 @Controller('bgg')
 export class BggController {
   constructor(private readonly bggService: BggService) {}
 
   @Get('search')
-  async search(@Query() params: any): Promise<any> {
-    console.log(params.query, '+');
+  async search(@Query() params: { query: string }): Promise<any> {
     return this.bggService.searchGame(params.query);
   }
 
