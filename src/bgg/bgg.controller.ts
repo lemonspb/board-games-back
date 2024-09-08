@@ -1,5 +1,7 @@
-import { Controller, Get, Req, Param, Query } from '@nestjs/common';
+import { Controller, Get, Res, Param, Query } from '@nestjs/common';
 // import translatte = require('translatte');
+import { BGG_RES } from '@/bgg/types/Bgg';
+import { AxiosResponse } from 'axios';
 
 import { BggService } from './bgg.service';
 
@@ -8,12 +10,22 @@ export class BggController {
   constructor(private readonly bggService: BggService) {}
 
   @Get('search')
-  async search(@Query() params: { query: string }): Promise<any> {
+  async search(@Query() params: { query: string }): Promise<BGG_RES> {
     return this.bggService.searchGame(params.query);
   }
 
+  @Get('getByRank')
+  async getByRank(@Query() params: { id: string }): Promise<any> {
+    return this.bggService.getByRank(params.id);
+  }
+
+  @Get('getAll')
+  async getAll(): Promise<any> {
+    return this.bggService.getAll();
+  }
+
   @Get('getById')
-  async getById(@Param() params: any): Promise<any> {
+  async getById(@Query() params: { id: number }): Promise<any> {
     // const a = await axios.get('https://api.geekdo.com/xmlapi/boardgame/170216');
 
     // const removeJsonTextAttribute = function (value, parentElement) {
@@ -63,6 +75,6 @@ export class BggController {
     //   title: c.boardgames.boardgame.name,
     //   description: description.text,
     // };
-    return 'getById';
+    return this.bggService.getById(params.id);
   }
 }
