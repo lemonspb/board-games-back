@@ -1,38 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { axiosBgg } from '@/bgg/helpers/axios';
 import { Repository } from 'typeorm';
-import { BggRanks } from './bgg.entity';
+import { BggRanks } from '@/bgg/bgg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-
+import { BggSearchList } from '@/bgg/types/bgg';
+import { SearchInitialResponse } from './types/searchInitial';
+import { removeAllTagsFromString } from './helpers/removeAllTagsFromString';
+import { translatteText } from './helpers/translatteText';
+import { BoardgameInitialResponse } from './types/boardgameInitial';
 @Injectable()
 export class BggService {
   @InjectRepository(BggRanks)
   private bggRepository: Repository<BggRanks>;
-  async searchGame(gameName: string): Promise<any> {
+  async searchGame(gameName: string): Promise<BggSearchList> {
     const res = await axiosBgg.get(`/search?query=${gameName}&type=boardgame`);
-    const json = JSON.parse(res.data);
+
+    const json: SearchInitialResponse = JSON.parse(res.data);
 
     return {
       data: json.items.item.map(({ _attributes, yearpublished, name }) => {
         return {
-          name: name?._attributes.value,
-          id: _attributes?.id,
-          yearpublished: yearpublished?._attributes.value,
+          name: name._attributes.value,
+          id: _attributes.id,
+          yearpublished: yearpublished._attributes.value,
         };
       }),
-      json,
     };
   }
   async getById(id: number): Promise<any> {
     const res = await axiosBgg.get(`/boardgame/${id}`, {
       baseURL: 'https://api.geekdo.com/xmlapi/',
     });
-    const json = JSON.parse(res.data);
-    console.log(json.boardgames.boardgame);
+    const { boardgamges }: BoardgameInitialResponse = JSON.parse(res.data);
+    const { boardgame } = boardgamges;
+    const translatedDescription = await translatteText(
+      removeAllTagsFromString(boardgame.description._text),
+    );
     return {
-      age: json.boardgames.boardgame.age._text,
-      description: json.boardgames.boardgame.description._text,
       id: id,
+      age: boardgame.age._text,
+      description: translatedDescription,
+      image: boardgame.image._text,
+      thumbnail: boardgame.thumbnail._text,
     };
   }
 
@@ -63,7 +72,7 @@ export class BggService {
     };
   }
 
-  async getByRank(rank): Promise<any> {
+  async getByRank(rank: number): Promise<any> {
     return await this.bggRepository.find({
       where: {
         rank: rank,
