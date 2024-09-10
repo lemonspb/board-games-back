@@ -3,11 +3,12 @@ import { axiosBgg } from './helpers/axios';
 import { Repository } from 'typeorm';
 import { BggRanks } from './entity/rank.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BggSearchList } from './types/Responces/Search';
-import { SearchInitialResponse } from './types/initialBggResponces/searchInitialResponse';
+import { BggSearchList } from './types/responces/Search';
+import { SearchInitialResponse } from './types/initialBggResponces/SearchInitialResponse';
 import { removeAllTagsFromString } from './helpers/removeAllTagsFromString';
 import { translatteText } from './helpers/translatteText';
-import { BoardgameInitialResponse } from './types/initialBggResponces/boardgameInitial';
+import { BoardgameInitialResponse } from './types/initialBggResponces/BoardgameInitialResponse';
+import { BggGetByIdResponse } from './types/responces/GetById';
 @Injectable()
 export class BggService {
   @InjectRepository(BggRanks)
@@ -27,7 +28,7 @@ export class BggService {
       }),
     };
   }
-  async getById(id: number): Promise<any> {
+  async getById(id: number): Promise<BggGetByIdResponse> {
     const res = await axiosBgg.get(`/boardgame/${id}`, {
       baseURL: 'https://api.geekdo.com/xmlapi/',
     });

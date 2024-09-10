@@ -13,7 +13,7 @@ export interface ReturnTranslatte {
 }
 
 export async function translatteText(text, from = 'en', to = 'ru') {
-  if (!text) return false;
+  if (!text) return '';
   else {
     let transletedText: ReturnTranslatte = await translatte(text, {
       from: from,
