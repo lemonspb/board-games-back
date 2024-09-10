@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { BggSearchList } from '@/bgg/types/bgg';
+import { BggSearchList } from '@/bgg/types/Responces/Search';
 import { BggService } from './bgg.service';
 
 @Controller('bgg')
@@ -11,15 +11,15 @@ export class BggController {
     return this.bggService.searchGame(params.query);
   }
 
-  @Get('getByRank')
-  async getByRank(@Query() params: { id: number }): Promise<any> {
-    return this.bggService.getByRank(params.id);
-  }
+  // @Get('getByRank')
+  // async getByRank(@Query() params: { id: number }): Promise<any> {
+  //   return this.bggService.getByRank(params.id);
+  // }
 
-  @Get('getAll')
-  async getAll(): Promise<any> {
-    return this.bggService.getAll();
-  }
+  // @Get('getAll')
+  // async getAll(): Promise<any> {
+  //   return this.bggService.getAll();
+  // }
 
   @Get('getById')
   async getById(@Query() params: { id: number }): Promise<any> {

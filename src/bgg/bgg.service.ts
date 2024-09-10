@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { axiosBgg } from '@/bgg/helpers/axios';
+import { axiosBgg } from './helpers/axios';
 import { Repository } from 'typeorm';
-import { BggRanks } from '@/bgg/bgg.entity';
+import { BggRanks } from './entity/rank.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BggSearchList } from '@/bgg/types/bgg';
-import { SearchInitialResponse } from './types/searchInitial';
+import { BggSearchList } from './types/Responces/Search';
+import { SearchInitialResponse } from './types/initialBggResponces/searchInitialResponse';
 import { removeAllTagsFromString } from './helpers/removeAllTagsFromString';
 import { translatteText } from './helpers/translatteText';
-import { BoardgameInitialResponse } from './types/boardgameInitial';
+import { BoardgameInitialResponse } from './types/initialBggResponces/boardgameInitial';
 @Injectable()
 export class BggService {
   @InjectRepository(BggRanks)

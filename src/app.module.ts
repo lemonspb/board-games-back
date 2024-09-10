@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 // import { BggService } from '@/bgg/bgg.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BggModule } from '@/bgg/bgg.module';
-import { BggRanks } from './bgg/bgg.entity';
+import { BggRanks } from './bgg/entity/rank.entity';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({

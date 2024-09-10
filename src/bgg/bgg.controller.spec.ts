@@ -1,22 +1,50 @@
 import { Test, TestingModule } from '@nestjs/testing';
-// import { AppController } from './bgg.controller';
-// import { AppService } from './bgg.service';
+import { BggController } from './bgg.controller';
+import { BggService } from './bgg.service';
+import { BggRanks } from './entity/rank.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-// describe('AppController', () => {
-//   let appController: AppController;
+describe('BggController', () => {
+  let bggController: BggController;
+  let bggRepository: Repository<BggRanks>;
+  beforeEach(async () => {
+    const bgg: TestingModule = await Test.createTestingModule({
+      controllers: [BggController],
 
-//   beforeEach(async () => {
-//     const app: TestingModule = await Test.createTestingModule({
-//       controllers: [AppController],
-//       providers: [AppService],
-//     }).compile();
+      providers: [
+        BggService,
+        {
+          provide: getRepositoryToken(BggRanks),
+          useValue: {},
+        },
+      ],
+    }).compile();
 
-//     appController = app.get<AppController>(AppController);
-//   });
+    bggController = bgg.get<BggController>(BggController);
+  });
 
-//   describe('root', () => {
-//     it('should return "Hello World!"', () => {
-//       expect(appController.getHello()).toBe('Hello World!');
-//     });
-//   });
-// });
+  describe('bgg', () => {
+    it('should return  data', async () => {
+      const result = {
+        data: [
+          {
+            name: 'Бумажные кварталы',
+            id: '233867',
+            yearpublished: '2018',
+          },
+          {
+            name: 'Бумажные кварталы. Коллекционное издание',
+            id: '392449',
+            yearpublished: '2023',
+          },
+        ],
+      };
+      expect(
+        await bggController.search({
+          query: 'бумажные кварталы',
+        }),
+      ).toStrictEqual(result);
+    });
+  });
+});
