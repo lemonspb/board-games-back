@@ -2,7 +2,7 @@ export type BoardgameInitialResponse = {
   _attributes: {
     termsofuse: string;
   };
-  boardgamges: {
+  boardgames: {
     boardgame: {
       _attributes: {
         objectid: string;
