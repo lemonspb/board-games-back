@@ -5,16 +5,17 @@ import {
   BggSearchList,
   BggGetAllResponse,
 } from './types/responces';
-
 import { BggRanks } from './entity/rank.entity';
+import { SearchQueryDto } from './dto/bgg.dto';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Controller('bgg')
 export class BggController {
   constructor(private readonly bggService: BggService) {}
 
   @Get('search')
-  async search(@Query() params: { query: string }): Promise<BggSearchList> {
-    return this.bggService.searchGame(params.query);
+  async search(@Query() query: SearchQueryDto): Promise<BggSearchList> {
+    return this.bggService.searchGame(query.query);
   }
 
   @Get('getAll')
@@ -24,13 +25,15 @@ export class BggController {
 
   @Get('getById')
   async getById(
-    @Query() params: { id: number },
+    @Query('id', ParseIntPipe) id: number,
   ): Promise<Partial<BggGetByIdResponse>> {
-    return this.bggService.getById(params.id);
+    return this.bggService.getById(id);
   }
 
   @Get('getByRank')
-  async getByRank(@Query() params: { id: number }): Promise<BggRanks[]> {
-    return this.bggService.getByRank(params.id);
+  async getByRank(
+    @Query('rank', ParseIntPipe) rank: number,
+  ): Promise<BggRanks[]> {
+    return this.bggService.getByRank(rank);
   }
 }

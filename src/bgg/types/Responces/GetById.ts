@@ -4,4 +4,7 @@ export type BggGetByIdResponse = {
   description: string;
   image: string;
   thumbnail: string;
+  minplayers: string;
+  maxplayers: string;
+  playingtime: string;
 };
