@@ -17,6 +17,7 @@ const mockEvent: GameEvents = {
 const mockRepository = {
   findOne: jest.fn(),
   save: jest.fn(),
+  create: jest.fn(),
 };
 
 describe('GameEventsService', () => {
@@ -40,27 +41,31 @@ describe('GameEventsService', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
   // 📌 Тест метода createEvent
-  it('должен вернуть созданое мероприятие', async () => {
-    mockRepository.findOne.mockResolvedValue(mockEvent);
+  it('должен вернуть созданное мероприятие', async () => {
     const createdEvent = {
-      date: '2025-02-05',
-      count: 1,
-      description: 'Играем в настолки',
+      id: 1,
       title: 'Board Game Night',
+      description: 'Играем в настолки',
+      date: '2025-02-05',
+      participants: [],
+      count: 0,
     };
 
     mockRepository.save.mockResolvedValue(createdEvent);
     const result = await service.createEvent(
       '2025-02-05',
-      1,
+      0,
       'Играем в настолки',
       'Board Game Night',
     );
-
     expect(result).toEqual(createdEvent);
-    expect(mockRepository.save).toHaveBeenCalledWith(createdEvent);
+    expect(mockRepository.save).toHaveBeenCalledWith({
+      count: 0,
+      date: '2025-02-05',
+      description: 'Играем в настолки',
+      title: 'Board Game Night',
+    });
   });
 
   // 📌 Тест метода getEvent
