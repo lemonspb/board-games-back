@@ -1,22 +1,22 @@
-import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity('game_events')
 export class GameEvents {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'text' })
   title: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column()
+  @Column({ type: 'text' })
   date: string;
 
-  @Column()
-  count: number;
+  @Column({ type: 'jsonb', default: '[]' })
+  participants: { id: string; name: string }[];
 
-  @Column('jsonb', { default: [] }) // JSONB-массив для имён участников
-  participants: string[];
+  @Column({ type: 'int', default: 0 })
+  count: number;
 }
