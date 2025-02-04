@@ -14,17 +14,18 @@ export class GameEventsService {
   private gameEventsRepository: Repository<GameEvents>;
 
   async createEvent(
-    date: string,
+    eventDate: string,
     count: number,
     description: string,
     title: string,
   ): Promise<GameEvents> {
     const newEvent = await this.gameEventsRepository.save({
-      date,
+      event_date: eventDate,
       count,
       description,
       title,
     });
+
     return newEvent;
   }
   async getEvent(id: number) {

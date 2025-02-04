@@ -9,9 +9,14 @@ const mockEvent: GameEvents = {
   id: 10,
   title: 'Board Game Night',
   description: 'Играем в настолки',
-  date: '2025-02-05',
+  event_date: new Date('2025-02-05'),
   participants: [{ id: 'abc123', name: 'Иван Петров' }],
   count: 1,
+  location: 'Москва',
+  is_public: true,
+  is_finished: false,
+  created_at: new Date(),
+  updated_at: new Date(),
 };
 
 const mockRepository = {
@@ -47,7 +52,7 @@ describe('GameEventsService', () => {
       id: 1,
       title: 'Board Game Night',
       description: 'Играем в настолки',
-      date: '2025-02-05',
+      event_date: new Date('2025-02-05'),
       participants: [],
       count: 0,
     };
@@ -62,7 +67,7 @@ describe('GameEventsService', () => {
     expect(result).toEqual(createdEvent);
     expect(mockRepository.save).toHaveBeenCalledWith({
       count: 0,
-      date: '2025-02-05',
+      event_date: '2025-02-05',
       description: 'Играем в настолки',
       title: 'Board Game Night',
     });

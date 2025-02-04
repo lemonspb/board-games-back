@@ -9,9 +9,15 @@ export class GameEventsController {
 
   @Post('create')
   async createEvent(
-    @Body() { date, count, description, title }: CreateEventDto,
+    @Body() { eventDate, count, description, title }: CreateEventDto,
   ): Promise<GameEvents> {
-    return this.gameEventsService.createEvent(date, count, description, title);
+    console.log(eventDate, count, description, title);
+    return this.gameEventsService.createEvent(
+      eventDate,
+      count,
+      description,
+      title,
+    );
   }
 
   @Get(':id')
