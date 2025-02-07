@@ -14,6 +14,10 @@ export class CreateEventDto {
   @IsString()
   description?: string;
 
+  @IsOptional()
+  @IsString()
+  location?: string;
+
   @IsDateString()
   eventDate: string;
 
