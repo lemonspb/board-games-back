@@ -15,7 +15,7 @@ const mockEvent: GameEvents = {
   location: 'Москва',
   is_public: true,
   is_finished: false,
-  boardGames: [1, 2, 3],
+  board_games: [1, 2, 3],
   created_at: new Date(),
   updated_at: new Date(),
 };
@@ -28,6 +28,7 @@ const mockRepository = {
 
 describe('GameEventsService', () => {
   let service: GameEventsService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let repository: Repository<GameEvents>;
 
   beforeEach(async () => {

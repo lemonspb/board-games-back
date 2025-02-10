@@ -78,8 +78,7 @@ export class BggService {
       );
 
       return {
-        // @ts-ignore
-        data: fullData.filter(Boolean), // Убираем null значения из массива
+        data: fullData.filter(Boolean) as BggGetAllResponse[], // Убираем null значения из массива
         count: total,
       };
     } catch (e) {

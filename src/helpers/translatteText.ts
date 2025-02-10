@@ -15,7 +15,7 @@ export interface ReturnTranslatte {
 export async function translatteText(text, from = 'en', to = 'ru') {
   if (!text) return '';
   else {
-    let transletedText: ReturnTranslatte = await translatte(text, {
+    const transletedText: ReturnTranslatte = await translatte(text, {
       from: from,
       to: to,
     });
