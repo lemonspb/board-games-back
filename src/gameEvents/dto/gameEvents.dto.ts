@@ -35,4 +35,10 @@ export class CreateEventDto {
   @IsArray()
   @IsString({ each: true })
   participants?: { name: string; id?: string }[];
+
+  @ApiPropertyOptional({ example: [1, 3, 7] }) // 👈 ID настолок
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  boardGames?: number[];
 }

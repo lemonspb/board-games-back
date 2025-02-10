@@ -15,6 +15,7 @@ const mockEvent: GameEvents = {
   location: 'Москва',
   is_public: true,
   is_finished: false,
+  boardGames: [1, 2, 3],
   created_at: new Date(),
   updated_at: new Date(),
 };
