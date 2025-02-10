@@ -40,7 +40,7 @@ export class CreateEventDto {
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
-  boardGames?: number[];
+  board_games?: number[];
 }
 
 export class AddBoardGameDto {

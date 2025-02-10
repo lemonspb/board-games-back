@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { axiosBgg } from './helpers/axios';
+import { axiosBgg } from '../helpers/axios';
 import { Repository } from 'typeorm';
 import { BggRanks } from './entity/rank.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SearchInitialResponse } from './types/initialBggResponces/SearchInitialResponse';
-import { removeAllTagsFromString } from './helpers/removeAllTagsFromString';
-import { translatteText } from './helpers/translatteText';
+import { removeAllTagsFromString } from '../helpers/removeAllTagsFromString';
+import { translatteText } from '../helpers/translatteText';
 import { BoardgameInitialResponse } from './types/initialBggResponces/BoardgameInitialResponse';
 
 import {
@@ -104,11 +104,11 @@ export class BggService {
           )
         : 'No description available';
 
-      console.log(boardgame);
-
       return {
         id: id,
-        name: boardgame.name[0]._text,
+        name:
+          boardgame.name.find((n) => n._attributes?.primary === 'true')._text ||
+          'N/A',
         age: boardgame.age?._text || 'N/A',
         description: translatedDescription,
         playingtime: boardgame.playingtime?._text || 'N/A',

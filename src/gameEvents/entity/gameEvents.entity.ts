@@ -36,7 +36,7 @@ export class GameEvents {
   is_finished: boolean; // Завершено ли мероприятие
 
   @Column('int', { array: true, default: [] }) // 👈 Массив ID настолок
-  boardGames: number[];
+  board_games: number[];
 
   @CreateDateColumn()
   created_at: Date;

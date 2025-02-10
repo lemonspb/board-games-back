@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { setupSwagger } from './config/swagger.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   setupSwagger(app); // Инициализация Swagger
   await app.listen(3003);
 }

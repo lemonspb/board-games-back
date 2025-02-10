@@ -82,12 +82,15 @@ export class GameEventsService {
     if (!event) {
       throw new NotFoundException(`Мероприятие с id ${id} не найдено`);
     }
-    if (event.boardGames.includes(gameId))
+    if (event.board_games.includes(gameId))
       throw new BadRequestException('Игра уже добавлена');
 
-    event.boardGames.push(gameId);
+    event.board_games.push(gameId);
     await this.gameEventsRepository.save(event);
 
-    return event.boardGames;
+    return {
+      message: 'Игра добавлена',
+      boardGames: event.board_games,
+    };
   }
 }
