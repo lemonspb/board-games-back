@@ -78,6 +78,7 @@ export class BggService {
       );
 
       return {
+        // @ts-ignore
         data: fullData.filter(Boolean), // Убираем null значения из массива
         count: total,
       };
@@ -103,8 +104,11 @@ export class BggService {
           )
         : 'No description available';
 
+      console.log(boardgame);
+
       return {
         id: id,
+        name: boardgame.name[0]._text,
         age: boardgame.age?._text || 'N/A',
         description: translatedDescription,
         playingtime: boardgame.playingtime?._text || 'N/A',
@@ -112,6 +116,8 @@ export class BggService {
         maxplayers: boardgame.maxplayers?._text || 'N/A',
         image: boardgame.image?._text || 'No image available',
         thumbnail: boardgame.thumbnail?._text || 'No thumbnail available',
+        averageweight:
+          boardgame.statistics.ratings.averageweight._text || 'N/A',
       };
     } catch (e) {
       console.error(`Error fetching game with ID: ${id}`, e.message);

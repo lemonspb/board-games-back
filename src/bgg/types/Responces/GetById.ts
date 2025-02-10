@@ -1,5 +1,6 @@
 export type BggGetByIdResponse = {
   id: number;
+  name: string;
   age: string;
   description: string;
   image: string;
@@ -7,4 +8,5 @@ export type BggGetByIdResponse = {
   minplayers: string;
   maxplayers: string;
   playingtime: string;
+  averageweight: string;
 };

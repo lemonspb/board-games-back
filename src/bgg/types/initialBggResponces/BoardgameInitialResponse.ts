@@ -1,3 +1,37 @@
+type GameAttribute = {
+  _attributes: {
+    name: string;
+    value: string;
+  };
+};
+
+type Rank = {
+  _attributes: {
+    type: string;
+    id: string;
+    name: string;
+    friendlyname: string;
+    value: string;
+    bayesaverage: string;
+  };
+};
+
+type Ratings = {
+  usersrated: { _text: string };
+  average: { _text: string };
+  bayesaverage: { _text: string };
+  ranks: { rank: Rank[] };
+  stddev: { _text: string };
+  median: { _text: string };
+  owned: { _text: string };
+  trading: { _text: string };
+  wanting: { _text: string };
+  wishing: { _text: string };
+  numcomments: { _text: string };
+  numweights: { _text: string };
+  averageweight: { _text: string };
+};
+
 export type BoardgameInitialResponse = {
   _attributes: {
     termsofuse: string;
@@ -155,6 +189,10 @@ export type BoardgameInitialResponse = {
         };
         results: any;
       }>;
+      result: GameAttribute[];
+      statistics: {
+        ratings: Ratings;
+      };
     };
   };
 };
