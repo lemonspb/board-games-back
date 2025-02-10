@@ -1,6 +1,15 @@
-import { Controller, Post, Body, Param, Get, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Get,
+  Delete,
+  ParseIntPipe,
+  Patch,
+} from '@nestjs/common';
 import { GameEventsService } from './gameEvents.service';
-import { CreateEventDto } from './dto/gameEvents.dto';
+import { CreateEventDto, AddBoardGameDto } from './dto/gameEvents.dto';
 import { GameEvents } from './entity/gameEvents.entity';
 
 @Controller('events')
@@ -36,5 +45,16 @@ export class GameEventsController {
     @Body() body: { participantId: string },
   ) {
     return this.gameEventsService.leaveEvent(id, body.participantId);
+  }
+
+  @Patch(':id/board-games')
+  async addBoardGame(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() addBoardGameDto: AddBoardGameDto,
+  ) {
+    return this.gameEventsService.addBoardGameToEvent(
+      id,
+      addBoardGameDto.gameId,
+    );
   }
 }

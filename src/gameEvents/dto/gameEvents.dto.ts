@@ -42,3 +42,9 @@ export class CreateEventDto {
   @IsNumber({}, { each: true })
   boardGames?: number[];
 }
+
+export class AddBoardGameDto {
+  @ApiProperty({ example: 3 })
+  @IsNumber()
+  gameId: number;
+}

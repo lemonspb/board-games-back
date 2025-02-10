@@ -74,4 +74,20 @@ export class GameEventsService {
       participants: event.participants,
     };
   }
+
+  async addBoardGameToEvent(id: number, gameId: number) {
+    const event = await this.gameEventsRepository.findOne({
+      where: { id },
+    });
+    if (!event) {
+      throw new NotFoundException(`Мероприятие с id ${id} не найдено`);
+    }
+    if (event.boardGames.includes(gameId))
+      throw new BadRequestException('Игра уже добавлена');
+
+    event.boardGames.push(gameId);
+    await this.gameEventsRepository.save(event);
+
+    return event.boardGames;
+  }
 }
